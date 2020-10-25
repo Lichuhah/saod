@@ -5,44 +5,6 @@
 
 using namespace std;
 
-/// <summary>
-/// ////////////////////////////////////////////////////////////////
-/// </summary>
-
-struct list {
-	string count;
-	list* next;
-};
-
-void AddListElem(string newListElem, list*& first) {
-	list* newElem = new list;
-	newElem->count = newListElem;
-	newElem->next = NULL;
-	if (first == NULL) {
-		first = newElem;
-	}
-	else {
-		list* tmp = first;
-		while (tmp->next != NULL) {
-			tmp = tmp->next;
-		}
-		tmp->next = newElem;
-	}
-}
-
-void OutputList(list*& first) {
-	list* tmp = first;
-	while (tmp != NULL) {
-		cout << tmp->count << " ";
-		tmp = tmp->next;
-
-	}
-	cout << endl;
-}
-
-/// <summary>
-/// ////////////////////////////////////////////////////////////////
-/// </summary>
 
 int doKey(string key) {
 	int keyint;
@@ -50,7 +12,21 @@ int doKey(string key) {
 	return keyint;
 }
 
-void genKeys(list* table[2000]) {
+void addKeys(string count, int key, string table[2000]) {
+	bool bad = true;
+	for (int i = key; i < 2000; i++) {
+		if (table[i].empty()) {
+			table[i] = count;
+			bad = false;
+			break;
+		}
+	}
+	if (bad) {
+		
+	}
+}
+
+void genKeys(string table[2000]) {
 	for (int i = 0; i < 6000; i++)
 	{
 		string temp;
@@ -61,65 +37,64 @@ void genKeys(list* table[2000]) {
 		temp += (char)(rand() % 26 + 65);
 		temp += (char)(rand() % 10 + 48);
 		int keytemp = doKey(temp);
-		AddListElem(temp, table[keytemp]);
+		addKeys(temp, keytemp, table);
+			
 	}
 }
 
-void checkTable(list* table[2000]) {
-	int checkList[2000];
+void showTable(string table[2000]) {
 	for (int i = 0; i < 2000; i++) {
-		list* temp = table[i];
-		if (temp == NULL) {
-			checkList[i] = 0;
+		string temp = table[i];
+		if (temp.empty()) {
+			cout << i << ": " << "NULL"<<endl;
 		}
 		else {
-			int length = 0;
-			list* tmp = temp;
-			while (tmp->next != NULL) {
-				tmp = tmp->next;
-				length++;
-			}
-			checkList[i] = length;
+			cout << i << ": "<<temp<<endl;
 		}
 	}
+}
+
+void search(string count, string table[2000]) {
+	int temp = doKey(count);
+	for (int i = temp; !table[i].empty(); i++) {
+		if (table[i] == count) {
+			cout << i << ":" << count<<endl;
+			break;
+		}
+	}
+}
+
+void search(int key, string table[2000]) {
+	cout << key << ":" << table[key] << endl;
+}
+
+void outExcel(string table[2000]) {
 	std::ofstream out("out.txt");
-	std::streambuf* coutbuf = std::cout.rdbuf(); 
-	std::cout.rdbuf(out.rdbuf()); 
-	for (int i = 0; i < 2000; i++)
-	{
-		cout << i << " " << checkList[i] << " " << endl;
-	}
-}
-
-void showTable(list* table[2000]) {
-	for (int i = 0; i < 2000; i++) {
-		list* temp = table[i];
-		if (temp == NULL) {
-			cout << i << ": " << "NULL";
-		}
-		else {
-			cout << i << ": ";
-			list* tmp = temp;
-			while (tmp->next != NULL) {
-				cout << tmp->count << " ";
-				tmp = tmp->next;
-			}
-			cout << endl;
-		}
-	}
-}
-
-int main() {
-
-	srand(time(0));
-	list* table[2000];
+	std::streambuf* coutbuf = std::cout.rdbuf();
+	std::cout.rdbuf(out.rdbuf());
 	
 	for (int i = 0; i < 2000; i++)
 	{
-		table[i] = NULL;
+		if (table[i].empty()) {
+			cout << i << " " << 0 << endl;
+		}
+		else {
+			cout << i << " " << 1 << endl;
+		}
+		
 	}
+}
+int main() {
+
+	srand(time(0));
+	string table[2000];
+	//addKeys("2FGHF1", doKey("2FGHF1"), table);
+	//addKeys("1FGHF2", doKey("1FGHF2"), table);
 	genKeys(table);
 	showTable(table);
+	outExcel(table);
+	//search("1FGHF2", table);
+	
 
 	
 	

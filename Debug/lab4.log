@@ -1,3 +1,3 @@
 ﻿  Source.cpp
-D:\Учеба\2 семестр\теорвер\lab4\Source.cpp(114,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Учеба\2 семестр\теорвер\lab4\Source.cpp(84,12): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
   lab4.vcxproj -> D:\Учеба\2 семестр\теорвер\labs\Debug\lab4.exe
